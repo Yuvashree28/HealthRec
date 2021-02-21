@@ -67,7 +67,7 @@ class _LiveRecState extends State<LiveRec> {
 
 
   getdataperiodic(healthrec) {
-    const oneSec = const Duration(seconds: 300);
+    const oneSec = const Duration(seconds: 3600);
 
     new Timer.periodic(oneSec, (Timer t) =>
         firestoreInstance.collection("users").add(
@@ -90,44 +90,20 @@ class _LiveRecState extends State<LiveRec> {
   }
 
   sendMail()  async {
-    // String email = 'wellnesstracker7@gmail.com';
-    // String password = 'trackerwellness*7';
 
     var options = new GmailSmtpOptions()
       ..username = 'healthrec24x7@gmail.com'
       ..password =  'rechealth247';
-
-
-    // ignore: deprecated_member_use
-    // final smtpServer = gmail(email, password);
-    // Use the SmtpServer class to configure an SMTP server:
-    // final smtpServer = SmtpServer('smtp.domain.com');
-    // See the named arguments of SmtpServer for further configuration
-    // options.
-    // Create our message.
     var emailTransport = new SmtpTransport(options);
 
     var envelope = new Envelope()
-    // final message = m1.Message()
       ..from = 'healthrec24x7@gmail.com'
       ..recipients.add(user.email)
-    // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
-    // ..bccRecipients.add(Address('bccAddress@example.com'))
       ..subject = 'Daily Health Report ${myFormat.format(dateToday)}'
       ..attachments.add(Attachment(file: new File(ourfile)))
       ..html = "<h1>Health Report ${myFormat.format(dateToday)}</h1>"
           "<p1>Hi ${user.displayName}, Your Health Report for ${myFormat.format(dateToday)} is here.</p1>";
 
-    // try {
-    //   final sendReport = await m1.send(message, smtpServer);
-    //
-    //   print('Message sent: ' + sendReport.toString());
-    // } on m1.MailerException catch (e) {
-    //   print('Message not sent.');
-    //   for (var p in e.problems) {
-    //     print('Problem: ${p.code}: ${p.msg}');
-    //   }
-    // }
 
     emailTransport.send(envelope)
         .then((envelope) {
@@ -350,6 +326,27 @@ class _LiveRecState extends State<LiveRec> {
               pw.SizedBox(
                   height: 10
               ),
+              pw.SizedBox(
+                  height: 10
+              ),
+              pw.Row(
+                  children: <pw.Widget>[
+                    pw.Text("Diabetes Risk",style: pw.TextStyle(fontSize: 12,fontWeight: pw.FontWeight.bold)),
+                    pw.SizedBox(
+                        height: 5
+                    ),
+                    pw.Text("Negative"),
+                  ]
+              ),
+              pw.SizedBox(
+                  height: 10
+              ),
+              pw.Divider(
+                  thickness: 1
+              ),
+              pw.SizedBox(
+                  height: 10
+              ),
 
 
             ]
@@ -397,12 +394,12 @@ class _LiveRecState extends State<LiveRec> {
         if(snapshot.hasData){
         var healthrec = snapshot.data;
         getdataperiodic(healthrec);
-        _timer = new Timer.periodic(Duration(seconds: 10), (timer) {
+        _timer = new Timer.periodic(Duration(seconds: 60), (timer) {
           if (DateTime
               .now()
-              .hour == 12 && DateTime
+              .hour == 23 && DateTime
               .now()
-              .minute == 49)  {
+              .minute == 59)  {
             countmail++;
 
             firestoreInstance.collection("users").where("uid",isEqualTo: user.uid).where("date",isEqualTo:myFormat.format(dateToday)).get().then((QuerySnapshot querySnapshot) => {
@@ -674,208 +671,3 @@ class _LiveRecState extends State<LiveRec> {
 
   }
 }
-//
-// Container(
-// height: MediaQuery.of(context).size.height,
-// width: MediaQuery.of(context).size.width,
-// color: Colors.black,
-// child: SingleChildScrollView(
-// physics: AlwaysScrollableScrollPhysics(),
-// child: Column(
-// children: <Widget>[
-// Row(
-// children: <Widget>[
-// Container(
-// height: MediaQuery.of(context).size.height,
-// width: MediaQuery.of(context).size.width/2,
-// child: Column(
-// children: <Widget>[
-// Container(
-// height: MediaQuery.of(context).size.height/4,
-// child: Center(
-// child: Card(
-// clipBehavior: Clip.antiAlias,
-// color: Colors.white30,
-// child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [
-// Padding(
-// padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-// child: ListTile(
-// title: const Text('Steps',
-// style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: "Kufam")),
-// subtitle: Text(
-// 'steps value',
-// style: TextStyle(color: Colors.white54,fontFamily: "Kufam"),
-// ),
-// ),
-// ),
-//
-// ]),
-// ),
-// ),
-// ),
-// Container(
-// height: MediaQuery.of(context).size.height/4,
-// child: Card(
-// clipBehavior: Clip.antiAlias,
-// color: Colors.black87,
-// child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [
-// Padding(
-// padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-// child: ListTile(
-// title: const Text('Body Temperature',
-// style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: "Kufam")),
-// subtitle: Text(
-// 'body temperature value',
-// style: TextStyle(color: Colors.white54,fontFamily: "Kufam"),
-// ),
-// ),
-// ),
-// ]),
-// ),
-// ),
-// Container(
-// height: MediaQuery.of(context).size.height/4,
-// child: Card(
-// clipBehavior: Clip.antiAlias,
-// color: Colors.white30,
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.center,children: [
-// Padding(
-// padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-// child: ListTile(
-// title: const Text('Respiration',
-// style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: "Kufam")),
-// subtitle: Text(
-// 'respiration value',
-// style: TextStyle(color: Colors.white54,fontFamily: "Kufam"),
-// ),
-// ),
-// ),
-// ]),
-// ),
-// ),
-// Container(
-// height: MediaQuery.of(context).size.height/4,
-// child: Card(
-// clipBehavior: Clip.antiAlias,
-// color: Colors.black87,
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.center,
-// children: [
-//
-// Padding(
-// padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-// child:ListTile(
-// title: const Text('Cholesterol',
-// style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: "Kufam")),
-// subtitle: Text(
-// 'cholesterol value',
-// style: TextStyle(color: Colors.white54,fontFamily: "Kufam"),
-// ),
-// ),
-// ),
-// ]),
-// ),
-// ),
-// ],
-// ),
-// ),
-// Container(
-// height: MediaQuery.of(context).size.height,
-// width: MediaQuery.of(context).size.width/2,
-// child: Column(
-// children: <Widget>[
-// Container(
-// height: MediaQuery.of(context).size.height/4,
-// child: Card(
-// clipBehavior: Clip.antiAlias,
-// color: Colors.black87,
-// child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [
-//
-// Padding(
-// padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-// child: ListTile(
-// title: const Text('Heart Rate',
-// style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: "Kufam")),
-// subtitle: Text(
-// 'heart rate value',
-// style: TextStyle(color: Colors.white54,fontFamily: "Kufam"),
-// ),
-// ),
-// ),
-// ]),
-// ),
-// ),
-// Container(
-// height: MediaQuery.of(context).size.height/4,
-// child: Card(
-// clipBehavior: Clip.antiAlias,
-// color: Colors.white30,
-// child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [
-//
-// Padding(
-// padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-// child: ListTile(
-// title: const Text('Blood Pressure',
-// style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: "Kufam")),
-// subtitle: Text(
-// 'blood pressure value',
-// style: TextStyle(color: Colors.white54,fontFamily: "Kufam"),
-// ),
-// ),
-// ),
-// ]),
-// ),
-// ),
-// Container(
-// height: MediaQuery.of(context).size.height/4,
-// child: Card(
-// clipBehavior: Clip.antiAlias,
-// color: Colors.black87,
-// child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [
-//
-// Padding(
-// padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-// child:  ListTile(
-// title: const Text('Glucose',
-// style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: "Kufam")),
-// subtitle: Text(
-// 'glucose value',
-// style: TextStyle(color: Colors.white54,fontFamily: "Kufam"),
-// ),
-// ),
-// ),
-// ]),
-// ),
-// ),
-// Container(
-// height: MediaQuery.of(context).size.height/4,
-// child: Card(
-// clipBehavior: Clip.antiAlias,
-// color: Colors.white30,
-// child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [
-//
-// Padding(
-// padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-// child: ListTile(
-// title: const Text('Oxygen Saturation',
-// style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: "Kufam")),
-// subtitle: Text(
-// 'oxygen saturation value',
-// style: TextStyle(color: Colors.white54,fontFamily: "Kufam"),
-// ),
-// ),
-// ),
-// ]),
-// ),
-// ),
-// ],
-// ),
-// ),
-// ],
-// ),
-// ],
-// ),
-// ),
-// ),
-//

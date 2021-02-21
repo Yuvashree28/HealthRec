@@ -332,6 +332,29 @@ class _ProfileState extends State<Profile> {
               pw.SizedBox(
                   height: 10
               ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                  children: <pw.Widget>[
+                    pw.Text("Diabetes Risk",style: pw.TextStyle(fontSize: 12,fontWeight: pw.FontWeight.bold)),
+                    pw.SizedBox(
+                        width: 5
+                    ),
+                    pw.Text(":",style: pw.TextStyle(fontSize: 12,fontWeight: pw.FontWeight.bold)),
+                    pw.SizedBox(
+                        width: 5
+                    ),
+                    pw.Text("Negative"),
+                  ]
+              ),
+              pw.SizedBox(
+                  height: 10
+              ),
+              pw.Divider(
+                  thickness: 1
+              ),
+              pw.SizedBox(
+                  height: 10
+              ),
 
 
             ]
@@ -947,22 +970,6 @@ class _ProfileState extends State<Profile> {
                                     Pdfgenerator(),
                                     sendMail(),
                                   },
-                                  // {
-                                  //   firestoreInstance.collection("reports").add(
-                                  //       {
-                                  //         "uid": user.currentUser.uid,
-                                  //         "date": myFormat.format(dateToday),
-                                  //         "bodytemperatureavg": bodytemperatureavg,
-                                  //         "bloodpressureavg": bloodpressureavg,
-                                  //         "respirationavg": respirationavg,
-                                  //         "glucoseavg":glucoseavg,
-                                  //         "heartrateavg":heartrateavg ,
-                                  //         "cholesterolavg":cholesterolavg,
-                                  //         "oxygensaturationavg": oxygensaturationavg,
-                                  //       }).then((value) {
-                                  //     print(value.id);
-                                  //   })
-                                  // }
 
 
                                 });

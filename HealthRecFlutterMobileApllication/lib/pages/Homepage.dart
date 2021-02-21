@@ -4,6 +4,7 @@ import 'package:healthrec/pages/LiveRec.dart';
 
 import 'HeathBot.dart';
 import 'ManRec.dart';
+import 'PredictionPage.dart';
 import 'Profile.dart';
 
 class Homepage extends StatefulWidget {
@@ -74,6 +75,52 @@ class _HomepageState extends State<Homepage> {
                                 Center(
                                     child: Text(
                                         "Monitor your live health data and assess it",
+                                        style: TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 12,
+                                            fontFamily:"Kufam")
+                                    )
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                      ),
+                    ),
+
+                    Container(
+                      height: MediaQuery.of(context).size.height/4,
+                      width: MediaQuery.of(context).size.width ,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        color:Colors.black87,
+
+                        elevation: 8,
+                        child: new InkWell(
+                          splashColor: Colors.black26,
+                          onTap: () async {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Predict()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(30),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Center(child: Text("Diabetes Prediction",style: TextStyle(color: Colors.white,fontSize: 25,fontFamily:"Kufam"))),
+                                Divider(
+                                  height: 20,
+                                  thickness: .5,
+                                  indent: 10,
+                                  endIndent: 10,
+                                  color: Colors.white70,
+                                ),
+                                SizedBox(height: 5,),
+                                Center(
+                                    child: Text(
+                                        "prediction is done using ml models",
                                         style: TextStyle(
                                             color: Colors.white70,
                                             fontSize: 12,
@@ -237,10 +284,15 @@ class _HomepageState extends State<Homepage> {
                   bottom: 468,
                 ),
                 Positioned(
+                  child: Icon(Icons.warning_rounded,color: Colors.blueAccent,size: 50,),
+                  right: 20,
+                  bottom: 642,
+                ),
+                Positioned(
                   child: Icon(Icons.watch,color: Colors.blueAccent,size: 50,),
                   right: 20,
-                  bottom: 634,
-                ),
+                  bottom: 805,
+                )
               ],
 
             ),
